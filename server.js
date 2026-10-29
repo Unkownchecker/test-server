@@ -129,11 +129,14 @@ app.post("/relay/:id/print", upload.single("file"), async (req, res) => {
       req.body.isFirmware === "true" ||
       /\.(img|dl)$/i.test(filename);
 
-    const isPreformatted =
-      req.body.isPreformatted === true ||
-      req.body.isPreformatted === "true";
+    const isPdf =
+      filename.toLowerCase().endsWith(".pdf") ||
+      (fileBuffer.length > 4 && fileBuffer.slice(0, 5).toString("latin1").startsWith("%PDF-"));
 
-    if (!isFirmware && !isPreformatted) {
+    // Fast-path: PDFs bypass slow server-side pdf-lib recompilation completely.
+    // Android's native PdfRenderer renders PDF directly in hardware.
+    // Only raw non-PDF image uploads (PNG, JPG) need conversion.
+    if (!isFirmware && !isPdf) {
       const prepared = await prepareDocumentForPrinter(fileBuffer, filename, {
         orientation: req.body.orientation,
         paperSize: req.body.paperSize,
