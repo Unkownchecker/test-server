@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Relay server for LAN Print's remote (anywhere) printing — pairs a desktop printer app with phones over the internet using a short ID.",
   "main": "server.js",
-  "engines": { "node": ">=18" },
+  "engines": { "node": ">=22.23.4" },
   "scripts": {
     "start": "node server.js"
   },
