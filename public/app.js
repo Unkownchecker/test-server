@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   } catch {}
   if (!defaultOrigin) {
-    defaultOrigin = "https://printer-p35v.onrender.com";
+    defaultOrigin = "https://test-server-xdog.onrender.com";
   }
 
   let mode = localStorage.getItem(MODE_KEY) || "local";
